@@ -6,7 +6,7 @@ import streamlit as st
 
 st.title(":musical_note: Convert a MIDI file to WAV")
 
-uploaded_file = st.file_uploader("Upload MIDI file", type=["mid"])
+uploaded_file = st.file_uploader("Upload MIDI file (you can fetch one on https://bitmidi.com/)", type=["mid"])
 
 if uploaded_file is None:
   st.info("Please upload a MIDI file")
