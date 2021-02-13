@@ -16,6 +16,6 @@ midi_data = pretty_midi.PrettyMIDI(uploaded_file)
 audio_data = midi_data.fluidsynth()
 
 virtualfile = io.BytesIO()
-wavfile.write(virtualfile, 44100, audio_data.astype(np.int16))
+wavfile.write(virtualfile, 44100, audio_data)
 
 st.audio(virtualfile)
