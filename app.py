@@ -1,5 +1,6 @@
+import io
 import pretty_midi
-import soundfile as sf
+from scipy.io import wavfile
 import streamlit as st
 
 st.title(":tada: Convert a MIDI file to Sound")
@@ -12,5 +13,8 @@ if uploaded_file is None:
 
 midi_data = pretty_midi.PrettyMIDI(uploaded_file)
 audio_data = midi_data.fluidsynth()
-sf.write('stereo_file.wav', audio_data, 44100, 'PCM_24')
-st.audio('stereo_file.wav')
+
+virtualfile = io.BytesIO()
+wavfile.write(virtualfile, 44100, audio_data.astype(np.int16))
+
+st.audio(virtualfile)
