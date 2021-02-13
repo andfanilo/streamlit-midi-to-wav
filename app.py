@@ -15,6 +15,5 @@ if uploaded_file is None:
 
 midi_data = pretty_midi.PrettyMIDI(uploaded_file)
 audio_data = midi_data.fluidsynth()
-audio_data = fluidsynth.raw_audio_string(audio_data)
-
+#audio_data = fluidsynth.raw_audio_string(audio_data)
 st.audio(audio_data)
