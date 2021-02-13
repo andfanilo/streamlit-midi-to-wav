@@ -1,4 +1,5 @@
 import io
+import fluidsynth
 import numpy as np
 import pretty_midi
 from scipy.io import wavfile
@@ -14,9 +15,9 @@ if uploaded_file is None:
 
 midi_data = pretty_midi.PrettyMIDI(uploaded_file)
 audio_data = midi_data.fluidsynth()
+audio_data = fluidsynth.raw_audio_string(audio_data)
 
-fs = 1 / audio_data.dt.value
 virtualfile = io.BytesIO()
-wavfile.write(virtualfile, int(fs), audio_data)
+wavfile.write(virtualfile, 44100, audio_data)
 
 st.audio(virtualfile)
