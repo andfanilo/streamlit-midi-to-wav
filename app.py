@@ -4,7 +4,7 @@ import pretty_midi
 from scipy.io import wavfile
 import streamlit as st
 
-st.title(":tada: Convert a MIDI file to Sound")
+st.title(":musical_note: Convert a MIDI file to WAV")
 
 uploaded_file = st.file_uploader("Upload MIDI file", type=["mid"])
 
