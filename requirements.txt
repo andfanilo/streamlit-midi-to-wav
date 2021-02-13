@@ -1,5 +1,6 @@
 mido
 pretty-midi
 pyfluidsynth
+scipy
 soundfile 
 streamlit
