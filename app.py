@@ -4,7 +4,12 @@ import streamlit as st
 
 st.title(":tada: Hello world !")
 
-midi_data = pretty_midi.PrettyMIDI('toto-africa.mid')
+uploaded_file = st.file_uploader("Upload MIDI file", type=["mid"])
+
+if uploaded_file is None:
+  st.stop() 
+
+midi_data = pretty_midi.PrettyMIDI(uploaded_file)
 audio_data = midi_data.fluidsynth()
 sf.write('stereo_file.wav', audio_data, 44100, 'PCM_24')
 st.audio('stereo_file.wav')
