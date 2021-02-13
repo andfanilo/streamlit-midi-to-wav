@@ -1,6 +1,7 @@
 import io
-import fluidsynth
+import numpy as np
 import pretty_midi
+from scipy.io import wavfile
 import streamlit as st
 
 st.title(":tada: Convert a MIDI file to Sound")
@@ -13,5 +14,9 @@ if uploaded_file is None:
 
 midi_data = pretty_midi.PrettyMIDI(uploaded_file)
 audio_data = midi_data.fluidsynth()
+audio_data = np.int16(audio_data / np.max(np.abs(audio_data)) * 32767 * 0.9) # -- Normalize for 16 bit audio https://github.com/jkanner/streamlit-audio/blob/main/helper.py
 
-st.audio(audio_data)
+virtualfile = io.BytesIO()    
+wavfile.write(virtualfile, int(fs), audio_data)
+    
+st.audio(virtualfile)
