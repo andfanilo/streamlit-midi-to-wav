@@ -1,4 +1,5 @@
 import io
+import numpy as np
 import pretty_midi
 from scipy.io import wavfile
 import streamlit as st
