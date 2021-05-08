@@ -24,6 +24,7 @@ def download_from_bitmidi(url: str, sess: requests.Session) -> io.BytesIO:
     soup = BeautifulSoup(r_page.content, "html.parser")
     link = soup.find(lambda tag: tag.name == "a" and tag.has_attr("download"))
     if link is None:
+        st.error(f"No MIDI file found on page '{url}'")
         raise ValueError(f"No MIDI file found on page '{url}'")
 
     url_midi_file = "https://bitmidi.com" + link["href"]
