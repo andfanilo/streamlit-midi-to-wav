@@ -17,7 +17,11 @@ def has_download_attr(tag):
     return tag.has_attr("download")
 
 
-@st.cache(hash_funcs={requests.Session: id}, allow_output_mutation=True)
+@st.cache(
+    hash_funcs={requests.Session: id},
+    allow_output_mutation=True,
+    suppress_st_warning=True,
+)
 def download_from_bitmidi(url: str, sess: requests.Session) -> bytes:
     user_agent = {"User-agent": "bot"}
     r_page = sess.get(url, headers=user_agent)
