@@ -22,9 +22,11 @@ def download_from_bitmidi(url: str, sess: requests.Session) -> io.BytesIO:
     user_agent = {"User-agent": "bot"}
     r_page = sess.get(url, headers=user_agent)
     soup = BeautifulSoup(r_page.content, "html.parser")
-    link = soup.find(lambda tag: tag.name == "a" and tag.has_attr("download"))["href"]
-    url_midi_file = "https://bitmidi.com" + link
+    link = soup.find(lambda tag: tag.name == "a" and tag.has_attr("download"))
+    if link is None:
+        raise ValueError(f"No MIDI file found on page '{url}'")
 
+    url_midi_file = "https://bitmidi.com" + link["href"]
     r_midi_file = sess.get(url_midi_file, headers=user_agent)
     virtual_midi_file = io.BytesIO(r_midi_file.content)
     return virtual_midi_file
