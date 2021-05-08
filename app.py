@@ -18,7 +18,7 @@ def has_download_attr(tag):
 
 
 @st.cache(hash_funcs={requests.Session: id}, allow_output_mutation=True)
-def download_from_bitmidi(url: str, sess: requests.Session) -> io.BytesIO:
+def download_from_bitmidi(url: str, sess: requests.Session) -> bytes:
     user_agent = {"User-agent": "bot"}
     r_page = sess.get(url, headers=user_agent)
     soup = BeautifulSoup(r_page.content, "html.parser")
@@ -29,8 +29,7 @@ def download_from_bitmidi(url: str, sess: requests.Session) -> io.BytesIO:
 
     url_midi_file = "https://bitmidi.com" + link["href"]
     r_midi_file = sess.get(url_midi_file, headers=user_agent)
-    virtual_midi_file = io.BytesIO(r_midi_file.content)
-    return virtual_midi_file
+    return r_midi_file.content
 
 
 def main():
@@ -49,7 +48,7 @@ def main():
             st.error("Make sure your URL is of type 'https://bitmidi.com/<midi_name>'")
             st.stop()
         with st.spinner(f"Downloading MIDI file from {bitmidi_link}"):
-            midi_file = download_from_bitmidi(bitmidi_link, sess)
+            midi_file = io.BytesIO(download_from_bitmidi(bitmidi_link, sess))
     else:
         midi_file = uploaded_file
 
