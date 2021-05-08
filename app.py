@@ -48,7 +48,8 @@ def main():
         if "https://bitmidi.com/" not in bitmidi_link:
             st.error("Make sure your URL is of type 'https://bitmidi.com/<midi_name>'")
             st.stop()
-        midi_file = download_from_bitmidi(bitmidi_link, sess)
+        with st.spinner(f"Downloading MIDI file from {bitmidi_link}"):
+            midi_file = download_from_bitmidi(bitmidi_link, sess)
     else:
         midi_file = uploaded_file
 
